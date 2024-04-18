@@ -1,0 +1,91 @@
+def calculate_bmi(weight, height):
+    bmi = weight/height**2
+    return bmi
+
+def calculate_calories_burned(duration, weight):
+    calories_per_minute = (3.8*weight)/60
+    calories_burned = calories_per_minute*duration
+    return calories_burned
+
+def filter_overweight_people(people_data):
+    overweight_people = []
+    for person in people_data:
+        bmi = calculate_bmi(person['weight'], person['height'])
+        if bmi >= 25:
+            overweight_people.append(person)
+    return overweight_people
+
+def over_to_normal(overweight_people):
+    print("It looks like you have been eating a little to much lately:(")
+    print("Let's change that!")
+    weight_goal = int(input('Enter your weight goal: '))
+    time_to_achieve = int(input('Enter in how many months you want that to happen: '))
+    for person in overweight_people:
+        for person[name] in people_data:
+            calculate_bmi(person['weight'], person['height'])
+            weight_difference = person['weight'] - weight_goal
+            less_calories = weight_difference*7700
+            less_calories_per_day = less_calories/(time_to_achieve*30)
+            print(f"{person['name']} you should eat {less_calories_per_day:.2f} calories less per day to be {weight_goal} kg in {time_to_achieve} months")
+
+def filter_underweight_people(people_data):
+    underweight_people = []
+    for person in people_data:
+        bmi = calculate_bmi(person['weight'], person['height'])
+        if bmi <= 18.5:
+            underweight_people.append(person)
+        return underweight_people
+
+def under_to_normal(underweight_people):
+    print("It looks like you haven't been eating enough:(")
+    print("Let's change that!")
+    weight_goal = int(input('Enter your weight goal: '))
+    time_to_achieve = int(input('Enter in how many months you want that to happen: '))
+    for person in underweight_people:
+        for person[name] in people_data:
+            calculate_bmi(person['weight'], person['height'])
+            weight_difference = weight_goal - person['weight']
+            additional_calories = weight_difference*7700
+            additional_calories_per_day = additional_calories/(time_to_achieve*30)
+            print(f"{person['name']} you should eat additional {additional_calories_per_day:.2f} calories per day to be {weight_goal} kg in {time_to_achieve} months")
+# Main program
+people_data = []
+
+print("Enter fitness data for each person (Enter a blank name to finish):")
+while True:
+    name = input("Enter person's name: ").strip()
+    if not name:
+        break
+    weight = float(input("Enter person's weight in kilograms: "))
+    height = float(input("Enter person's height in meters: "))
+    duration = int(input("Enter exercise duration in minutes: "))
+    person = {'name': name, 'weight': weight, 'height': height, 'duration': duration}
+    people_data.append(person)
+
+print("\nFitness Analysis:")
+for person in people_data:
+    bmi = calculate_bmi(person['weight'], person['height'])
+    calories_burned = calculate_calories_burned(person['duration'], person['weight'])
+    print(f"{person['name']}: BMI = {bmi:.2f}, Calories burned = {calories_burned}")
+
+overweight_people = filter_overweight_people(people_data)
+print("\nOverweight People:")
+for person in overweight_people:
+    bmi = calculate_bmi(person['weight'], person['height'])
+    print(f"{person['name']}: BMI = {bmi:.2f}")
+
+underweight_people = filter_underweight_people(people_data)
+print("\nUnderweight People:")
+for person in underweight_people:
+    bmi = calculate_bmi(person['weight'], person['height'])
+    print(f"{person['name']}: BMI = {bmi:.2f}")
+
+if underweight_people:
+    under_to_normal(underweight_people)
+else:
+    print("No underweight people:)")
+
+if overweight_people:
+    over_to_normal(overweight_people)
+else:
+    print('No overweight people:)')
